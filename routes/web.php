@@ -20,6 +20,12 @@ Route::get('/principal',function(){
 	return view('layouts.general');
 });
 
+//blueprint con estructura de graficas con selector javascript
+Route::get('/graficas',function(){
+	return view('blueprints.general_graphics');
+});
+
+
 //blueprint de grafica de barras
 Route::get('/barras',function(){
 	return view('blueprints.barras');

@@ -1,4 +1,4 @@
-@extends('layouts.general')
+@extends('blueprints.general_graphics')
 @section('content')
 <canvas id="myChart" width="400" height="130"></canvas>
 <script>
