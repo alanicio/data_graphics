@@ -11,10 +11,10 @@
         <a class="nav-link active" href="#">opcion 1</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">opcion 2</a>
+        <a class="nav-link" href="#">Privilegios</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">opcion 3</a>
+        <a class="nav-link" href="#">Usuarios</a>
       </li>
       <li class="nav-item">
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">deshabilitado</a>

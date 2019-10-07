@@ -1,18 +1,4 @@
-@extends('layouts.general')
-@section('content')
-	<div class="input-group mb-3">
-	  <div class="input-group-prepend">
-	    <label class="input-group-text" for="inputGroupSelect01">Tipos de graficas</label>
-	  </div>
-	  <select class="custom-select" id="graphic_type">
-	    <option selected value="0">Barras</option>
-	    <option value="1">linea</option>
-	    <option value="2">circular</option>
-	  </select>
-	</div>
-	<canvas id="myChart" width="400" height="130"></canvas>
 
-	<script type="text/javascript">
 		$( document ).ready(function() {
 		    return barras();
 		});
@@ -33,7 +19,7 @@
 		    data: {
 		        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
 		        datasets: [{
-		            label: 'datas',
+		            label: '# of Votes',
 		            data: [12, 19, 3, 5, 2, 3],
 		            backgroundColor: [
 		                'rgba(255, 99, 132, 0.2)',
@@ -130,5 +116,4 @@
 
 
 	}
-	</script>
-@endsection
+	
