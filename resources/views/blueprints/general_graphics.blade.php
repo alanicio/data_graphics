@@ -10,7 +10,7 @@
 	    <option value="2">circular</option>
 	  </select>
 	</div>
-	<canvas id="myChart" width="400" height="130"></canvas>
+	<div class="bg-light"><canvas id="myChart" width="400" height="130"></canvas></div>
 
 	<script type="text/javascript">
 		var myChart;

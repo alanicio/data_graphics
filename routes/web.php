@@ -36,6 +36,12 @@ Route::get('/linea',function(){
 	return view('blueprints.line');
 });
 
+//blue print login
+
+Route::get('/inicio',function(){
+	return view('blueprints.login');
+});
+
 Route::get('example','ExampleController@index');
 
 Auth::routes();
