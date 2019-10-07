@@ -13,10 +13,12 @@
 	<canvas id="myChart" width="400" height="130"></canvas>
 
 	<script type="text/javascript">
+		var myChart;
 		$( document ).ready(function() {
 		    return barras();
 		});
 		$('#graphic_type').change(function(){
+			myChart.destroy();
 			var option=$(this).val();
 			if(option==0)
 				return barras();
@@ -28,7 +30,7 @@
 
 	function barras(){
 		var ctx = document.getElementById('myChart').getContext('2d');
-		var myChart = new Chart(ctx, {
+		myChart = new Chart(ctx, {
 		    type: 'bar',
 		    data: {
 		        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -67,7 +69,7 @@
 	}
 
 	function lineas(){
-		new Chart(document.getElementById("myChart"), {
+		myChart=new Chart(document.getElementById("myChart"), {
 		  type: 'line',
 		  data: {
 		    labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
@@ -110,7 +112,7 @@
 	}
 
 	function circulo(){
-		new Chart(document.getElementById("myChart"), {
+		myChart=new Chart(document.getElementById("myChart"), {
 	    type: 'pie',
 	    data: {
 	      labels: ["data1", "data2", "data3", "data4", "data5"],
