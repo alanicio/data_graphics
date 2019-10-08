@@ -1,7 +1,6 @@
 @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
 .banner-sec{background:#FFFFFF)  no-repeat left bottom; background-size:cover; min-height:500px; border-radius: 0 10px 10px 0; padding:0;}
-.container{background:#fff; border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);}
-.carousel-inner{border-radius:0 10px 10px 0;}
+.container{background:#fff; /*border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);*/}
 .carousel-caption{text-align:left; left:5%;}
 .login-sec{padding: 50px 30px; position:relative;}
 .login-sec .copy-text{position:absolute; width:80%; bottom:20px; font-size:13px; text-align:center;}
@@ -14,3 +13,26 @@
 .banner-text h2{color:#fff; font-weight:600;}
 .banner-text h2:after{content:" "; width:100px; height:5px; background:#FFF; display:block; margin-top:20px; border-radius:3px;}
 .banner-text p{color:#fff;}
+.opacity{opacity: 0.8;}
+.sombra{border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);}
+.iconos-botones::before{
+    font-family: "Font Awesome\ 5 Free";
+    font-size: 40px;
+}
+
+.iconos-botones#boton-admin::before{
+    content: "\f2bb";
+}
+
+.iconos-botones#boton-operador::before{
+    content: "\f2c1";
+}
+.form-registro{
+	padding-top: 30px;
+	margin-left: auto;
+ 	margin-right: auto;
+ }
+ .margen-slides{
+ 	margin-top: auto;
+ 	margin-bottom: auto;
+ }

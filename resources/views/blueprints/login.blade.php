@@ -1,6 +1,6 @@
 @extends('layouts.general')
 @section('content')
-<div class="container">
+<div class="container sombra">
   <div class="row">
     <div class="col-md-4 login-sec">
         <h2 class="text-center text-danger">Inicio Sesion</h2>

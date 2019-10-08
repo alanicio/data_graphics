@@ -36,10 +36,16 @@ Route::get('/linea',function(){
 	return view('blueprints.line');
 });
 
-//blue print login
+//blueprint login
 
 Route::get('/inicio',function(){
 	return view('blueprints.login');
+});
+
+//blueprint registro
+
+Route::get('/registro',function(){
+	return view('blueprints.registro');
 });
 
 Route::get('example','ExampleController@index');
