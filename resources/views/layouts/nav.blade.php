@@ -8,7 +8,7 @@
   <div class="collapse navbar-collapse" id="exCollapsingNavbar">
     <ul class="nav nav-pills">
       <li class="nav-item">
-        <a class="nav-link active" href="#">opcion 1</a>
+        <a class="nav-link active" href="#">Presentación de datos</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Privilegios</a>
