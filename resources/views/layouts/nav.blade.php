@@ -8,13 +8,17 @@
   <div class="collapse navbar-collapse" id="exCollapsingNavbar">
     <ul class="nav nav-pills">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Presentación de datos</a>
+        <a class="nav-link" href="{{url('graficas')}}" id="Presentación_de_datos">Presentación de datos</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Privilegios</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Usuarios</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="Usuarios_modulo" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuarios</a>
+        <div class="dropdown-menu" aria-labelledby="Usuarios_modulo">
+          <a class="dropdown-item" href="{{route('usuarios.index')}}">Ver</a>
+          <a class="dropdown-item" href="{{route('usuarios.create')}}">Agregar</a>
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">deshabilitado</a>

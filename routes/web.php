@@ -15,26 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Presentacion de datos
+Route::get('/graficas','Datos\GraficaController@index');
+
+
+//Modulo de usuarios
+Route::resource('usuarios','Sesion\UsuarioController');
+
+
 //Probar y ver diesño de layout general
 Route::get('/principal',function(){
 	return view('layouts.general');
 });
 
-//blueprint con estructura de graficas con selector javascript
-Route::get('/graficas',function(){
-	return view('blueprints.general_graphics');
-});
 
 
-//blueprint de grafica de barras
-Route::get('/barras',function(){
-	return view('blueprints.barras');
-});
-
-//blueprint de grafica de linea
-Route::get('/linea',function(){
-	return view('blueprints.line');
-});
 
 //blueprint login
 

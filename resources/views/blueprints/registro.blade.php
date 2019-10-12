@@ -71,4 +71,11 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#Usuarios_modulo').attr('class','nav-link dropdown-toggle active');
+		$('.nav-link dropdown-toggle active').attr('class','nav-link dropdown-toggle')
+		$('.nav-link active').attr('class','nav-link');
+	});
+</script>
 @endsection
