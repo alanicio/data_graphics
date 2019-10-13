@@ -2,8 +2,18 @@
 @section('content')
 	<div style="margin-right: 4%;margin-left: 4%;margin-bottom: 4%;">
 		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<label class="input-group-text">Tipo de calibración</label>
+			</div>
+			<select class="custom-select" id="medicion_type">
+			  	<option selected="" value="">Seleccione que calibración quiere ver</option>
+			  	<option value="1">Dinamometro</option>
+			  	<option value="2">Fisico mecanicas</option>
+		  </select>
+		</div>
+		<div class="input-group mb-3" id="div_graphic_type" style="display: none;">
 		  <div class="input-group-prepend">
-		    <label class="input-group-text" for="inputGroupSelect01">Tipos de graficas</label>
+		    <label class="input-group-text" for="graphic_type">Tipos de graficas</label>
 		  </div>
 		  <select class="custom-select" id="graphic_type">
 		  	<option selected="" value="">Seleccion tipo de grafica...</option>
@@ -40,6 +50,46 @@
 			
 	</div>
 	<script type="text/javascript">
+		var datas;
+		var MetaDatas;
+		var background;
+		var border;
+		var centros;
+		$('#medicion_type').change(function(){
+			var selected=$(this).val();
+			if(selected>0)
+			{
+				$('#div_graphic_type').show();
+				$.ajax({
+					type:'GET',
+					url:"{{url('calibracion')}}"+"/"+selected,
+					success:function(res){
+						datas=res.data;
+						centros=res.centros;
+						background=res.background;
+						border=res.border;
+					}
+				});
+				if(myChart)
+				{
+					myChart.destroy();
+					var option=$('#graphic_type').val();
+					if(option==0)
+						return barras();
+					else if(option==1)
+						return lineas();
+					else if(option==2)
+						return circulo();
+				}
+				
+			}
+			else
+			{
+				$('#div_graphic_type').hide();
+				myChart.destroy();
+			}
+		});
+
 		var myChart;
 		$(document).ready(function(){
 			$('.nav-link dropdown-toggle active').attr('class','nav-link dropdown-toggle')
@@ -63,26 +113,12 @@
 		myChart = new Chart(ctx, {
 		    type: 'bar',
 		    data: {
-		        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+		        labels: centros,
 		        datasets: [{
 		            label: 'datas',
-		            data: [12, 19, 3, 5, 2, 3],
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.2)',
-		                'rgba(54, 162, 235, 0.2)',
-		                'rgba(255, 206, 86, 0.2)',
-		                'rgba(75, 192, 192, 0.2)',
-		                'rgba(153, 102, 255, 0.2)',
-		                'rgba(255, 159, 64, 0.2)'
-		            ],
-		            borderColor: [
-		                'rgba(255, 99, 132, 1)',
-		                'rgba(54, 162, 235, 1)',
-		                'rgba(255, 206, 86, 1)',
-		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)',
-		                'rgba(255, 159, 64, 1)'
-		            ],
+		            data: datas,
+		            backgroundColor: background,
+		            borderColor: border,
 		            borderWidth: 1
 		        }]
 		    },
