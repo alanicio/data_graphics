@@ -19,12 +19,29 @@ class GraficaController extends Controller
     	$color_orilla=[];
     	if($tipo==1)
     	{
-    		$data=DB::table('Cal_Dinos')->pluck('Mprim');
-    		$MetaData=DB::table('Cal_Dinos')->pluck('linea');
+    		$columnas=DB::getSchemaBuilder()->getColumnListing('Cal_Dinos');
+
     	}
     	if($tipo==2)
     	{
-    		$data=DB::table('Cal_FM')->pluck('LEFT');
+    		$columnas=DB::getSchemaBuilder()->getColumnListing('Cal_FM');
+    	}
+
+    	return view('datos.select_data',['datas'=>array_slice($columnas, 6)]);
+    }
+
+    public function graficar(Request $request)
+    {
+    	$color_fondo=[];
+    	$color_orilla=[];
+    	if($request->tipo==1)
+    	{
+    		$data=DB::table('Cal_Dinos')->pluck(str_replace('+', ' ', $request->dato));
+    		$MetaData=DB::table('Cal_Dinos')->pluck('linea');
+    	}
+    	if($request->tipo==2)
+    	{
+    		$data=DB::table('Cal_FM')->pluck(str_replace('+', ' ', $request->dato));
     		$MetaData=DB::table('Cal_FM')->pluck('linea');
     	}
 

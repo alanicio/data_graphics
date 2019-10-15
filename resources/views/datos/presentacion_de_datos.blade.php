@@ -11,6 +11,13 @@
 			  	<option value="2">Fisico mecanicas</option>
 		  </select>
 		</div>
+		<div class="input-group mb-3" id="datos" style="display: none;">
+			<div class="input-group-prepend">
+				<label class="input-group-text">Selecicone dato a graficar</label>
+			</div>
+			<select class="custom-select" id="datos_type">
+			</select>
+		</div>
 		<div class="input-group mb-3" id="div_graphic_type" style="display: none;">
 		  <div class="input-group-prepend">
 		    <label class="input-group-text" for="graphic_type">Tipos de graficas</label>
@@ -51,41 +58,61 @@
 	</div>
 	<script type="text/javascript">
 		var datas;
-		var MetaDatas;
 		var background;
 		var border;
 		var centros;
-		$('#medicion_type').change(function(){
+		var medicion;
+
+		$('#datos_type').change(function(){
 			var selected=$(this).val();
-			if(selected>0)
+			if(selected)
 			{
 				$('#div_graphic_type').show();
+				$.ajax({
+					type:'POST',
+					url:"{{url('graficar')}}",	
+					data:{"_token": "{{ csrf_token() }}",tipo:medicion,dato:selected},
+					success:function(res){
+						datas=res.data;
+						background=res.background;
+						border=res.border;
+						centros=res.centros;
+					}
+				});
+			}
+		});
+
+		$('#medicion_type').change(function(){
+			var selected=$(this).val();
+			medicion=selected;
+			if(selected>0)
+			{
+				//$('#div_graphic_type').show();
 				$.ajax({
 					type:'GET',
 					url:"{{url('calibracion')}}"+"/"+selected,
 					success:function(res){
-						datas=res.data;
-						centros=res.centros;
-						background=res.background;
-						border=res.border;
+						$('#datos').show();
+						$('#datos_type').html(res);
 					}
 				});
-				if(myChart)
-				{
-					myChart.destroy();
-					var option=$('#graphic_type').val();
-					if(option==0)
-						return barras();
-					else if(option==1)
-						return lineas();
-					else if(option==2)
-						return circulo();
-				}
+				// if(myChart)
+				// {
+				// 	myChart.destroy();
+				// 	var option=$('#graphic_type').val();
+				// 	if(option==0)
+				// 		return barras();
+				// 	else if(option==1)
+				// 		return lineas();
+				// 	else if(option==2)
+				// 		return circulo();
+				// }
 				
 			}
 			else
 			{
 				$('#div_graphic_type').hide();
+				$('#datos').hide();
 				myChart.destroy();
 			}
 		});

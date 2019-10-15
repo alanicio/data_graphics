@@ -18,6 +18,7 @@ Route::get('/', function () {
 //Presentacion de datos
 Route::get('/graficas','Datos\GraficaController@index');
 Route::get('calibracion/{tipo}','Datos\GraficaController@calibracion');
+Route::post('graficar','Datos\GraficaController@graficar');
 
 
 //Modulo de usuarios
