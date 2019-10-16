@@ -79,6 +79,16 @@
 						centros=res.centros;
 					}
 				});
+				if (myChart) {
+					myChart.destroy();
+					var option=$('#graphic_type').val();
+					if(option==0)
+						return barras();
+					else if(option==1)
+						return lineas();
+					else if(option==2)
+						return circulo();
+				}
 			}
 		});
 
@@ -142,7 +152,7 @@
 		    data: {
 		        labels: centros,
 		        datasets: [{
-		            label: 'datas',
+		            label: 'lineas',
 		            data: datas,
 		            backgroundColor: background,
 		            borderColor: border,
@@ -150,6 +160,7 @@
 		        }]
 		    },
 		    options: {
+		    	legend: { display: false },
 		        scales: {
 		            yAxes: [{
 		                ticks: {
