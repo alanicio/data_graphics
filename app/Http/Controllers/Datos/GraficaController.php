@@ -34,14 +34,23 @@ class GraficaController extends Controller
     {
     	$color_fondo=[];
     	$color_orilla=[];
+        $data=[];
     	if($request->tipo==1)
     	{
-    		$data=DB::table('Cal_Dinos')->pluck(str_replace('+', ' ', $request->dato));
+    		$data_fake=DB::table('Cal_Dinos')->select(''.str_replace('+', ' ', $request->dato).'')->get();
+            foreach($data_fake as $d){
+                $array=array_values(get_object_vars($d));
+                $data[]=floatval($array[0]);
+            }
     		$MetaData=DB::table('Cal_Dinos')->pluck('linea');
     	}
     	if($request->tipo==2)
     	{
-    		$data=DB::table('Cal_FM')->pluck(str_replace('+', ' ', $request->dato));
+    		$data_fake=DB::table('Cal_FM')->select(''.str_replace('+', ' ', $request->dato).'')->get();
+            foreach($data_fake as $d){
+                $array=array_values(get_object_vars($d));
+                $data[]=floatval($array[0]);
+            }
     		$MetaData=DB::table('Cal_FM')->pluck('linea');
     	}
 
