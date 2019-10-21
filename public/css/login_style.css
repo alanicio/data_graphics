@@ -15,6 +15,7 @@
 .banner-text p{color:#fff;}
 .opacity{opacity: 0.8;}
 .sombra{border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);}
+.curvar{border-radius: 10px}
 .iconos-botones::before{
     font-family: "Font Awesome\ 5 Free";
     font-size: 40px;
@@ -36,3 +37,4 @@
  	margin-top: auto;
  	margin-bottom: auto;
  }
+

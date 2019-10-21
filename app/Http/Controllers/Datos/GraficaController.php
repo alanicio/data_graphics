@@ -12,7 +12,6 @@ class GraficaController extends Controller
     {
     	return view('datos.presentacion_de_datos');
     }
-
     public function calibracion($tipo)
     {
     	$color_fondo=[];
@@ -28,6 +27,10 @@ class GraficaController extends Controller
     	}
 
     	return view('datos.select_data',['datas'=>array_slice($columnas, 6)]);
+    }
+
+    public function formulario($id){
+        return view('datos.formulario_graficas',['id'=>$id]);
     }
 
     public function graficar(Request $request)
