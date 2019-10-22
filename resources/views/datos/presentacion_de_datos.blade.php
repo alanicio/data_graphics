@@ -17,19 +17,25 @@
   	</div>
 
   <script>
-  	var id=0;
+  	var myChart = [];
+  	var datas = [];
+	var background = [];
+	var border = [];
+	var centros = [];
+	var medicion = [];
+  	var formId=0;
     $("#menu-toggle").click(function(e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
 
     $("#agregar").click(function(){
-    	id+=1;
+    	formId+=1;
     	$.ajax({
-        	url: "{{url('formulario')}}"+"/"+id,
+        	url: "{{url('formulario')}}"+"/"+formId,
         	success:function(res){
         		$("#formularioDinamico").append(res);
-        		$("#canvasGraficas").append("<div class='bg-light curvar mb-3'><canvas id='myChart"+id+"' width='400' height='130'></canvas></div>");
+        		$("#canvasGraficas").append("<div class='bg-light curvar mb-3'><canvas id='myChart"+formId+"' width='400' height='130'></canvas></div>");
         	},
         	error:function(res){
         		$("#formularioDinamico").html('algo anda mal');
@@ -42,5 +48,145 @@
 		$('.nav-link active').attr('class','nav-link');
 		$('#Presentación_de_datos').attr('class','nav-link active');
 	});
+
+	function mostrarDatosGrafica(numId){
+		var selected=$('#medicion_type'+numId).val();
+			medicion[numId]=selected;
+			if(selected>0)
+			{
+				$.ajax({
+					type:'GET',
+					url:"{{url('calibracion')}}"+"/"+selected,
+					success:function(res){
+						$('#datos_type'+numId).html(res);
+					}
+				});
+			}
+			else
+			{
+				myChart[numid].destroy();
+			}
+	}
+
+	function obtenerDatos(numId){
+		var selected=$('#datos_type'+numId).val();
+			if(selected)
+			{
+				$.ajax({
+					type:'POST',
+					url:"{{url('graficar')}}",	
+					data:{"_token": "{{ csrf_token() }}",tipo:medicion[numId],dato:selected},
+					success:function(res){
+						datas[numId]=res.data;
+						background[numId]=res.background;
+						border[numId]=res.border;
+						centros[numId]=res.centros;
+					}
+				});
+				if (myChart[numId]) {
+					myChart[numId].destroy();
+					var option=$('#graphic_type'+numId).val();
+					if(option==1)
+						barras(numId);
+					else if(option==2)
+						lineas(numId);
+					else if(option==3)
+						circulo(numId);
+				}
+			}
+	}
+	function dibujarGrafica(id){
+		var option=$('#graphic_type'+id).val();
+		//elegirGrafica(id,option);
+		if(myChart[id])
+			myChart[id].destroy();
+			if(option==1)
+				 barras(id);
+			else if(option==2)
+				 lineas(id);
+			else if(option==3)
+				 circulo(id);
+	}
+
+	function elegirGrafica(id,opcion){
+		alert('hola');
+		if(opcion==1)
+			barras(id);
+		else if(opcion==2)
+			lineas(id);
+		else id(opcion==3)
+			circulo(id);
+	}
+	function barras(id){
+		var ctx = document.getElementById('myChart'+id).getContext('2d');
+		myChart[id] = new Chart(ctx, {
+		    type: 'bar',
+		    data: {
+		        labels: centros[id],
+		        datasets: [{
+		            label: 'lineas',
+		            data: datas[id],
+		            backgroundColor: background[id],
+		            borderColor: border[id],
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		    	legend: { display: false },
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero: true
+		                }
+		            }]
+		        }
+		    }
+		});
+	}
+
+	function lineas(id){
+		myChart[id]=new Chart(document.getElementById('myChart'+id), {
+		  type: 'line',
+		  data: {
+		    labels: centros[id],
+		    datasets: [{ 
+		        data: datas[id],
+		        label: centros[id],
+		        borderColor: "#3e95cd",
+		        fill: false
+		      }
+		    ]
+		  },
+		  options: {
+		    title: {
+		      display: true,
+		      text: 'data'
+		    }
+		  }
+		});
+
+	}
+
+	function circulo(id){
+		myChart[id]=new Chart(document.getElementById('myChart'+id), {
+	    type: 'pie',
+	    data: {
+	      labels:centros[id],
+	      datasets: [{
+	        label: "datas",
+	        backgroundColor: background[id],
+	        data: datas[id]
+	      }]
+	    },
+	    options: {
+	      title: {
+	        display: true,
+	        text: 'datas'
+	      }
+	    }
+	});
+
+
+	}
   </script>	
 @endsection
