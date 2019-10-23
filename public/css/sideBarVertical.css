@@ -1,7 +1,7 @@
 @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
 #sidebar-wrapper {
-  min-height: 100%
-  margin-left: -30rem;
+  min-width: 355px;
+  margin-left: -500px;
   -webkit-transition: margin .25s ease-out;
   -moz-transition: margin .25s ease-out;
   -o-transition: margin .25s ease-out;
@@ -12,11 +12,6 @@
   padding: 0.875rem 1.25rem;
   font-size: 1.2rem;
 }
-
-#sidebar-wrapper .list-group {
-  width: 10rem;
-}
-
 #page-content-wrapper {
   min-width: 100vw;
 }
@@ -25,9 +20,10 @@
   margin-left: 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 300px) {
   #sidebar-wrapper {
     margin-left: 0;
+    /*min-width: 350px;*/
   }
 
   #page-content-wrapper {
@@ -36,15 +32,15 @@
   }
 
   #wrapper.toggled #sidebar-wrapper {
-    margin-left: -30rem;
+    margin-left: -500px;
   }
 }
 .icono-plus::before{
     font-family: "Font Awesome\ 5 Free";
     font-size: 20px;
+    padding: 0px;
 }
 
 .icono-plus#agregar::before{
     content: "\f0fe";
-    padding: 0px;
 }

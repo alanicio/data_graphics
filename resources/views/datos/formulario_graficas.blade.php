@@ -1,4 +1,4 @@
-<div class="container-fluid bg-danger curvar p-3 mb-1">
+<div class="container-fluid bg-danger p-3 mb-1">
   	<div class="input-group mb-3">
 		<div class="input-group-prepend">
 			<label class="input-group-text">Tipo de calibración</label>
