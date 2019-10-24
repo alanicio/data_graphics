@@ -20,6 +20,7 @@ Route::get('/graficas','Datos\GraficaController@index');
 Route::get('formulario/{id}','Datos\GraficaController@formulario');
 Route::get('calibracion/{tipo}','Datos\GraficaController@calibracion');
 Route::post('graficar','Datos\GraficaController@graficar');
+Route::post('filtro/fecha','Datos\GraficaController@filtrar_fecha');
 
 
 //Modulo de usuarios

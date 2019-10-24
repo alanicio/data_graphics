@@ -26,7 +26,66 @@
 	var centros = [];
 	var medicion = [];
   	var formId=0;
+  	var dateMen=[];//dateI
+  	var dateMay=[];//dateF
   	agregarFormulario();
+
+  	function dateMenor(id){
+  		dateMen[id]=$('#dateI'+id).val();
+  		if(dateMay[id])
+  		{
+  			var med=$('#medicion_type'+id).val();
+  			var datos=$('#datos_type'+id).val();
+  			$.ajax({
+  				type:"POST",
+  				data:{"_token": "{{ csrf_token() }}",fechaMenor:dateMen[id],fechaMayor:dateMay[id],tipo:med,dato:datos},
+  				url:"{{url('filtro/fecha')}}",
+  				success: function(res){
+  					datas[id]=res.data;
+  					if (myChart[id]) {
+						myChart[id].destroy();
+						var option=$('#graphic_type'+id).val();
+						if(option==1)
+							barras(id);
+						else if(option==2)
+							lineas(id);
+						else if(option==3)
+							circulo(id);
+					}
+  				},
+  			});
+  		}
+  		// else
+  		// 	alert('mayor indefinido');
+  	}
+
+  	function dateMayor(id){
+  		dateMay[id]=$('#dateF'+id).val();
+  		if(dateMay[id])
+  			var med=$('#medicion_type'+id).val();
+  			var datos=$('#datos_type'+id).val();
+  			$.ajax({
+  				type:"POST",
+  				data:{"_token": "{{ csrf_token() }}",fechaMenor:dateMen[id],fechaMayor:dateMay[id],tipo:med,dato:datos},
+  				url:"{{url('filtro/fecha')}}",
+  				success: function(res){
+  					datas[id]=res.data;
+  					if (myChart[id]) {
+						myChart[id].destroy();
+						var option=$('#graphic_type'+id).val();
+						if(option==1)
+							barras(id);
+						else if(option==2)
+							lineas(id);
+						else if(option==3)
+							circulo(id);
+					}
+  				},
+  			});
+  		// else
+  		// 	alert('menor indefinido');
+  	}
+
     $("#menu-toggle").click(function(e) {
      	e.preventDefault();
       	$("#wrapper").toggleClass("toggled");

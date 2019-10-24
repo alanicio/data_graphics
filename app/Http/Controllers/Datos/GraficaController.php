@@ -68,4 +68,29 @@ class GraficaController extends Controller
     		'border'=>$color_orilla,
     	]);
     }
+
+    public function filtrar_fecha(Request $request)
+    {
+        $data=[];
+        if($request->tipo==1)
+        {
+            $data_fake=DB::table('Cal_Dinos')->select(''.str_replace('+', ' ', $request->dato).'')->where('Fecha Calibracion','>=',$request->fechaMenor)->where('Fecha Calibracion','<=',$request->fechaMayor)->get();
+            foreach($data_fake as $d){
+                $array=array_values(get_object_vars($d));
+                $data[]=floatval($array[0]);
+            }
+            $MetaData=DB::table('Cal_Dinos')->pluck('linea');
+        }
+        if($request->tipo==2)
+        {
+            $data_fake=DB::table('Cal_FM')->select(''.str_replace('+', ' ', $request->dato).'')->where('Fecha Calibracion','>=',$request->fechaMenor)->where('Fecha Calibracion','<=',$request->fechaMayor)->get();
+            foreach($data_fake as $d){
+                $array=array_values(get_object_vars($d));
+                $data[]=floatval($array[0]);
+            }
+            $MetaData=DB::table('Cal_FM')->pluck('linea');
+        }
+
+        return response()->json(['data'=>$data]);
+    }
 }

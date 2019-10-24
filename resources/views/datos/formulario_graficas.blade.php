@@ -27,4 +27,12 @@
 	    <option value="3">circular</option>
 	  </select>
 	</div>
+	<div class="input-group mb-3" id="dates{{$id}}">
+	  <div class="input-group-prepend">
+	    <label class="input-group-text" for="dates{{$id}}">Intervalo de la informacion</label>
+	  </div>
+	  <div class="form-row align-items-center">
+	  	<input type="date" class="form-control mb-2" id="dateI{{$id}}" name="date_menor" style="width: 49%; margin-right: 2%;" onchange="dateMenor({{$id}})">
+	  	<input type="date" class="form-control mb-2" id="dateF{{$id}}" name="date_mayor" style="width: 49%;" onchange="dateMayor({{$id}})">	  	
+	  </div>
 </div>
