@@ -38,6 +38,7 @@ class GraficaController extends Controller
     	$color_fondo=[];
     	$color_orilla=[];
         $data=[];
+        $MetaData=[];
     	if($request->tipo==1)
     	{
     		$data_fake=DB::table('Cal_Dinos')->select(''.str_replace('+', ' ', $request->dato).'')->get();
@@ -45,7 +46,11 @@ class GraficaController extends Controller
                 $array=array_values(get_object_vars($d));
                 $data[]=floatval($array[0]);
             }
-    		$MetaData=DB::table('Cal_Dinos')->pluck('linea');
+    		$MetaData_fake=DB::table('Cal_Dinos')->select('Fecha calibracion')->get();
+            foreach($MetaData_fake as $m){
+                $array2=array_values(get_object_vars($m));
+                $MetaData[]=($array2[0]);
+            }
     	}
     	if($request->tipo==2)
     	{
@@ -54,7 +59,11 @@ class GraficaController extends Controller
                 $array=array_values(get_object_vars($d));
                 $data[]=floatval($array[0]);
             }
-    		$MetaData=DB::table('Cal_FM')->pluck('linea');
+    		$MetaData_fake=DB::table('Cal_FM')->select('Fecha calibracion')->get();
+            foreach($MetaData_fake as $m){
+                $array2=array_values(get_object_vars($m));
+                $MetaData[]=($array2[0]);
+            }
     	}
 
     	foreach ($data as $value) {
