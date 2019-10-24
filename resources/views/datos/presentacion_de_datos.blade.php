@@ -1,24 +1,37 @@
 @extends('layouts.general')
 @section('content')
-  <div class="d-flex" id="wrapper">
+<div class="container-fluid">
+	<div id="mySidebar" class="sidebar">
+	      <div id="formularioDinamico">
+	    </div>
+	</div>
 
-    <div class="bg-light border-right curvar text-center" id="sidebar-wrapper">
-      <div class="sidebar-heading">Opciones</div>
-      <button class="btn btn-outline-danger icono-plus mb-2" id="agregar" onclick="agregarFormulario()"></button>
-      <div id="formularioDinamico">
-      </div>
-    </div>
-
-    <div id="page-content-wrapper">
-
-      <div><button class="btn btn-danger ml-3 mb-1" id="menu-toggle">Menu</button></div>
-      <div class="container-fluid" id="canvasGraficas">
-      </div>
-      <div class="curvar text-center ml-3 mr-3 p-3"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.157716686945!2d-99.20397228597615!3d19.448765745205307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d2021212247371%3A0xf7b84691bb722035!2sMAHA%20oficina!5e0!3m2!1ses!2smx!4v1571852112355!5m2!1ses!2smx" class="curvar" width="400" height="300" frameborder="2" style="border:0;" allowfullscreen=""></iframe>
-      </div>
-  	</div>
+	<div id="main"> 
+		<div class="ml-3" id="canvasGraficas"></div>
+		<div class="curvar text-center p-3"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.157716686945!2d-99.20397228597615!3d19.448765745205307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d2021212247371%3A0xf7b84691bb722035!2sMAHA%20oficina!5e0!3m2!1ses!2smx!4v1571852112355!5m2!1ses!2smx" class="curvar mapa" frameborder="2" style="border:0;" allowfullscreen=""></iframe>
+		</div>
+	</div>
+</div>
+  
 
   <script>
+  	function desplazar(id){
+  		var tam =401;
+		$('#mySidebar').scrollTop((id-1)*tam);
+  	}
+  	function openNav() {
+		document.getElementById("mySidebar").style.width = "325px";
+		document.getElementById("main").style.marginLeft = "325px";
+		setInterval(redimencionar,16);
+		clearInterval(redimencionar);
+	}
+
+	function closeNav() {
+		document.getElementById("mySidebar").style.width = "0";
+		document.getElementById("main").style.marginLeft = "0px";
+		setInterval(redimencionar,16);
+		clearInterval(redimencionar);
+	}
   	var myChart = [];
   	var datas = [];
 	var background = [];
@@ -105,7 +118,7 @@
         	url: "{{url('formulario')}}"+"/"+formId,
         	success:function(res){
         		$("#formularioDinamico").append(res);
-        		$("#canvasGraficas").append("<div class='bg-light chart-container curvar mb-3' style='min-height=400'><canvas id='myChart"+formId+"' width='400' height='130'></canvas></div>");
+        		$("#canvasGraficas").append("<div><button class='openbtn' onclick='openNav()'>☰ Menu</button></div>"+"<div class='bg-light chart-container curvar mb-3' onmouseover='desplazar("+formId+")' style='min-width:250px'><canvas id='myChart"+formId+"' width='400' height='150'></canvas></div>");
         	},
         	error:function(res){
         		$("#formularioDinamico").html('algo anda mal');
@@ -188,13 +201,14 @@
 			circulo(id);
 	}
 	function barras(id){
+		var selected=$('#datos_type'+id).val();
 		var ctx = document.getElementById('myChart'+id).getContext('2d');
 		myChart[id] = new Chart(ctx, {
 		    type: 'bar',
 		    data: {
 		        labels: centros[id],
 		        datasets: [{
-		            label: 'lineas',
+		            label: 'dato: ',
 		            data: datas[id],
 		            backgroundColor: background[id],
 		            borderColor: border[id],
@@ -202,7 +216,7 @@
 		        }]
 		    },
 		    options: {
-		    	legend: { display: false },
+		    	legend: { display: true, text:selected },
 		        scales: {
 		            yAxes: [{
 		                ticks: {
@@ -215,11 +229,13 @@
 	}
 
 	function lineas(id){
+		var selected=$('#datos_type'+id).val();
 		myChart[id]=new Chart(document.getElementById('myChart'+id), {
 		  type: 'line',
 		  data: {
 		    labels: centros[id],
 		    datasets: [{ 
+		    	label:'dato:',
 		        data: datas[id],
 		        label: centros[id],
 		        borderColor: "#3e95cd",
@@ -230,7 +246,7 @@
 		  options: {
 		    title: {
 		      display: true,
-		      text: 'data'
+		      text: selected
 		    }
 		  }
 		});
@@ -238,12 +254,13 @@
 	}
 
 	function circulo(id){
+		var selected=$('#datos_type'+id).val();
 		myChart[id]=new Chart(document.getElementById('myChart'+id), {
 	    type: 'pie',
 	    data: {
 	      labels:centros[id],
 	      datasets: [{
-	        label: "datas",
+	        label: "dato: ",
 	        backgroundColor: background[id],
 	        data: datas[id]
 	      }]
@@ -251,7 +268,7 @@
 	    options: {
 	      title: {
 	        display: true,
-	        text: 'datas'
+	        text: selected
 	      }
 	    }
 	});
