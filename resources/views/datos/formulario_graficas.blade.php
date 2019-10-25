@@ -26,6 +26,22 @@
 			<option selected="" value="">Seleccione dato</option>
 		</select>
 	</div>
+	<div class="input-group input-group-sm mb-3" id="verificentro{{$id}}">
+		<div class="input-group-prepend">
+			<label class="input-group-text">Verificentro:</label>
+		</div>
+		<select class="custom-select" id="verificentros{{$id}}" onchange="obtenerVerify('{{$id}}')">
+			<option selected="" value="">Seleccione verificentro</option>
+		</select>
+	</div>
+	<div class="input-group input-group-sm mb-3" id="linea{{$id}}">
+		<div class="input-group-prepend">
+			<label class="input-group-text">Linea:</label>
+		</div>
+		<select class="custom-select" id="lineas{{$id}}" onchange="obtenerLinea('{{$id}}')">
+			<option selected="" value="">Seleccione linea</option>
+		</select>
+	</div>	
 	<div class="input-group input-group-sm mb-3" id="div_graphic_type{{$id}}">
 	  <div class="input-group-prepend">
 	    <label class="input-group-text" for="graphic_type{{$id}}">Grafica:</label>

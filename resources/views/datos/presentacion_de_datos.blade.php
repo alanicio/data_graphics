@@ -41,35 +41,59 @@
   	var formId=0;
   	var dateMen=[];//dateI
   	var dateMay=[];//dateF
+  	var verificentro=[];
+  	var linea=[];
   	agregarFormulario();
+
+  	function obtenerVerify(id){
+  		verificentro[id]=$('#verificentros'+id).val();
+  		filtrar(id);
+  	}
+
+  	function obtenerLinea(id){
+  		linea[id]=$('#lineas'+id).val();
+  		filtrar(id);
+  	}
+
+  	function filtrar(id)
+  	{
+  		var med=$('#medicion_type'+id).val();
+  		var datos=$('#datos_type'+id).val();
+		$.ajax({
+			type:"POST",
+			data:{"_token": "{{ csrf_token() }}",
+					fechaMenor:dateMen[id],
+					fechaMayor:dateMay[id],
+					verificentro:verificentro[id],
+					linea:linea[id],
+					tipo:med,
+					dato:datos
+				},
+			url:"{{url('filtrar')}}",
+  			success: function(res){
+  				datas[id]=res.data;
+  				centros[id]=res.centros;
+  				background[id]=res.background;
+				border[id]=res.border;
+				if (myChart[id]) {
+					myChart[id].destroy();
+					var option=$('#graphic_type'+id).val();
+					if(option==1)
+						barras(id);
+					else if(option==2)
+						lineas(id);
+					else if(option==3)
+						circulo(id);
+				}
+			},
+		});
+  	}
 
   	function dateMenor(id){
   		dateMen[id]=$('#dateI'+id).val();
   		if(dateMay[id])
   		{
-  			var med=$('#medicion_type'+id).val();
-  			var datos=$('#datos_type'+id).val();
-  			$.ajax({
-  				type:"POST",
-  				data:{"_token": "{{ csrf_token() }}",fechaMenor:dateMen[id],fechaMayor:dateMay[id],tipo:med,dato:datos},
-  				url:"{{url('filtro/fecha')}}",
-  				success: function(res){
-  					datas[id]=res.data;
-  					centros[id]=res.centros;
-  					background[id]=res.background;
-					border[id]=res.border;
-  					if (myChart[id]) {
-						myChart[id].destroy();
-						var option=$('#graphic_type'+id).val();
-						if(option==1)
-							barras(id);
-						else if(option==2)
-							lineas(id);
-						else if(option==3)
-							circulo(id);
-					}
-  				},
-  			});
+  			filtrar(id);
   		}
   		// else
   		// 	alert('mayor indefinido');
@@ -78,29 +102,9 @@
   	function dateMayor(id){
   		dateMay[id]=$('#dateF'+id).val();
   		if(dateMen[id])
-  			var med=$('#medicion_type'+id).val();
-  			var datos=$('#datos_type'+id).val();
-  			$.ajax({
-  				type:"POST",
-  				data:{"_token": "{{ csrf_token() }}",fechaMenor:dateMen[id],fechaMayor:dateMay[id],tipo:med,dato:datos},
-  				url:"{{url('filtro/fecha')}}",
-  				success: function(res){
-  					datas[id]=res.data;
-  					centros[id]=res.centros;
-  					background[id]=res.background;
-					border[id]=res.border;
-  					if (myChart[id]) {
-						myChart[id].destroy();
-						var option=$('#graphic_type'+id).val();
-						if(option==1)
-							barras(id);
-						else if(option==2)
-							lineas(id);
-						else if(option==3)
-							circulo(id);
-					}
-  				},
-  			});
+  		{
+  			filtrar(id);
+  		}	  			
   		// else
   		// 	alert('menor indefinido');
   	}
@@ -150,6 +154,20 @@
 						$('#datos_type'+numId).html(res);
 					}
 				});
+				$.ajax({
+					type:'GET',
+					url:"{{url('verificentros')}}"+"/"+selected,
+					success:function(res){
+						$('#verificentros'+numId).html(res);
+					}
+				});
+				$.ajax({
+					type:'GET',
+					url:"{{url('lineas')}}"+"/"+selected,
+					success:function(res){
+						$('#lineas'+numId).html(res);
+					}
+				});
 			}
 			else
 			{
@@ -161,19 +179,9 @@
 		var selected=$('#datos_type'+numId).val();
 			if(selected)
 			{
-				if(dateMay[numId] && dateMen[numId])
+				if( (dateMay[numId] && dateMen[numId]) || verificentro[numId] || linea[numId])
 				{
-					$.ajax({
-						type:"POST",
-		  				data:{"_token": "{{ csrf_token() }}",fechaMenor:dateMen[id],fechaMayor:dateMay[id],tipo:med,dato:datos},
-		  				url:"{{url('filtro/fecha')}}",
-		  				success:function(res){
-							datas[numId]=res.data;
-							background[numId]=res.background;
-							border[numId]=res.border;
-							centros[numId]=res.centros;
-		  				}
-					});
+					filtrar(numId);
 				}
 				else
 				{
@@ -188,16 +196,16 @@
 							centros[numId]=res.centros;
 						}
 					});
-				}
-				if (myChart[numId]) {
-					myChart[numId].destroy();
-					var option=$('#graphic_type'+numId).val();
-					if(option==1)
-						barras(numId);
-					else if(option==2)
-						lineas(numId);
-					else if(option==3)
-						circulo(numId);
+					if (myChart[numId]) {
+						myChart[numId].destroy();
+						var option=$('#graphic_type'+numId).val();
+						if(option==1)
+							barras(numId);
+						else if(option==2)
+							lineas(numId);
+						else if(option==3)
+							circulo(numId);
+					}
 				}
 			}
 	}
