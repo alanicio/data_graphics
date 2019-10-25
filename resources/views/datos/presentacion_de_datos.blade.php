@@ -55,6 +55,9 @@
   				url:"{{url('filtro/fecha')}}",
   				success: function(res){
   					datas[id]=res.data;
+  					centros[id]=res.centros;
+  					background[id]=res.background;
+					border[id]=res.border;
   					if (myChart[id]) {
 						myChart[id].destroy();
 						var option=$('#graphic_type'+id).val();
@@ -74,7 +77,7 @@
 
   	function dateMayor(id){
   		dateMay[id]=$('#dateF'+id).val();
-  		if(dateMay[id])
+  		if(dateMen[id])
   			var med=$('#medicion_type'+id).val();
   			var datos=$('#datos_type'+id).val();
   			$.ajax({
@@ -83,6 +86,9 @@
   				url:"{{url('filtro/fecha')}}",
   				success: function(res){
   					datas[id]=res.data;
+  					centros[id]=res.centros;
+  					background[id]=res.background;
+					border[id]=res.border;
   					if (myChart[id]) {
 						myChart[id].destroy();
 						var option=$('#graphic_type'+id).val();
@@ -155,17 +161,34 @@
 		var selected=$('#datos_type'+numId).val();
 			if(selected)
 			{
-				$.ajax({
-					type:'POST',
-					url:"{{url('graficar')}}",	
-					data:{"_token": "{{ csrf_token() }}",tipo:medicion[numId],dato:selected},
-					success:function(res){
-						datas[numId]=res.data;
-						background[numId]=res.background;
-						border[numId]=res.border;
-						centros[numId]=res.centros;
-					}
-				});
+				if(dateMay[numId] && dateMen[numId])
+				{
+					$.ajax({
+						type:"POST",
+		  				data:{"_token": "{{ csrf_token() }}",fechaMenor:dateMen[id],fechaMayor:dateMay[id],tipo:med,dato:datos},
+		  				url:"{{url('filtro/fecha')}}",
+		  				success:function(res){
+							datas[numId]=res.data;
+							background[numId]=res.background;
+							border[numId]=res.border;
+							centros[numId]=res.centros;
+		  				}
+					});
+				}
+				else
+				{
+					$.ajax({
+						type:'POST',
+						url:"{{url('graficar')}}",	
+						data:{"_token": "{{ csrf_token() }}",tipo:medicion[numId],dato:selected},
+						success:function(res){
+							datas[numId]=res.data;
+							background[numId]=res.background;
+							border[numId]=res.border;
+							centros[numId]=res.centros;
+						}
+					});
+				}
 				if (myChart[numId]) {
 					myChart[numId].destroy();
 					var option=$('#graphic_type'+numId).val();
@@ -216,7 +239,7 @@
 		        }]
 		    },
 		    options: {
-		    	legend: { display: true, text:selected },
+		    	legend: { display: false, text:selected },
 		        scales: {
 		            yAxes: [{
 		                ticks: {
