@@ -4,9 +4,6 @@
 			<div class="ml-3"><button class="btn btn-light" onclick="closeNav()">X</button></div>
 		</div>
 		<div class=""><h4 class="text-light">Opciones</h4></div>
-		<div class="ml-3">
-			<button class="btn btn-primary icono-plus mb-2" id="agregar" onclick="agregarFormulario()"></button>
-		</div>
 	</div>
   	<div class="input-group input-group-sm mb-3">
 		<div class="input-group-prepend">
@@ -61,5 +58,9 @@
 	  	<input type="date" class="form-control" id="dateI{{$id}}" name="date_menor" style="width: 49%; margin-right: 2%;" onchange="dateMenor('{{$id}}')">
 	  	<input type="date" class="form-control" id="dateF{{$id}}" name="date_mayor" style="width: 49%;" onchange="dateMayor('{{$id}}')">	  	
 	  </div>
+	</div>
+	<div class="ml-3 row">
+		<p><h4 class="text-light mt-3">Nueva Grafica</h4></p>
+			<button class="btn btn-primary icono-plus mt-2 ml-3" id="agregar" onclick="agregarFormulario()"></button>
 	</div>
 </div>

@@ -5,7 +5,7 @@ body {
 
 .sidebar {
   border-radius: 10px;
-  height:400px;
+  height:485px;
   width: 0;
   position: fixed;
   z-index: 1;
@@ -49,9 +49,6 @@ body {
 
 .icono-plus#agregar::before{
     content: "\f0fe";
-}
-.mapa{
-  max-width: 100%;
 }
 
 .maximoPantalla{

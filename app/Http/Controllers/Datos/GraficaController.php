@@ -93,7 +93,7 @@ class GraficaController extends Controller
     	}
 
     	foreach ($data as $value) {
-    		$color_fondo[]='rgba('.rand(1,255).','.rand(1,255).','.rand(1,255).',0.2)';
+    		$color_fondo[]='rgba('.rand(1,255).','.rand(1,255).','.rand(1,255).',0.7)';
     		$color_orilla[]='rgba('.rand(1,255).','.rand(1,255).','.rand(1,255).',1)';
     	}
     	return response()->json([

@@ -16,7 +16,7 @@
 
   <script>
   	function desplazar(id){
-  		var tam =401;
+  		var tam =487;
 		$('#mySidebar').scrollTop((id-1)*tam);
   	}
   	function openNav() {
@@ -242,12 +242,17 @@
 		            label: 'dato: ',
 		            data: datas[id],
 		            backgroundColor: background[id],
-		            borderColor: border[id],
-		            borderWidth: 1
+		            borderColor: background[id],
+		            borderWidth: 4
 		        }]
 		    },
 		    options: {
-		    	legend: { display: false, text:selected },
+		    	title:{
+		    		display: true,
+		    		text:selected,
+		    		fontSize:16
+		    	},
+		    	legend: { display: false },
 		        scales: {
 		            yAxes: [{
 		                ticks: {
@@ -277,7 +282,8 @@
 		  options: {
 		    title: {
 		      display: true,
-		      text: selected
+		      text: selected,
+		      fontSize:16
 		    }
 		  }
 		});
@@ -299,7 +305,8 @@
 	    options: {
 	      title: {
 	        display: true,
-	        text: selected
+	        text: selected,
+	        fontSize:16
 	      }
 	    }
 	});
